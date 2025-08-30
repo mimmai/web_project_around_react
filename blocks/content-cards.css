@@ -1,0 +1,122 @@
+.cards {
+margin: auto;
+margin-top: 30px;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center;
+gap: 15px;
+}
+
+.cards__list{
+display: flex;
+flex-wrap: wrap;
+list-style-type: none;
+margin: auto;
+padding: 0;
+gap: 15px;
+}
+
+.card {
+  background-color: white;
+  width: 282px;
+  height: 361px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: auto;
+  position: relative;
+}
+
+.card__image {
+  width: 282px;
+  height: 282px;
+  display: block;
+  border-radius: 10px 10px 0px 0px;
+  object-fit: cover;
+}
+
+.card__trash-button {
+  background-image: url("../images/Trash.svg");
+  background-position: left;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 250px;
+  top: 15px;
+  border: none;
+}
+
+
+.card__trash-button:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.card__description {
+width: 265px;
+height: 23px;
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
+color: black;
+}
+
+.card__title {
+font-family: Inter;
+color: black;
+font-size: 24px;
+font-weight: 900;
+line-height: 29px;
+text-align: left;
+padding: 0;
+align-self: baseline;
+margin-left: 10px;
+text-overflow: ellipsis;
+white-space: nowrap;
+max-width: 219px;
+overflow: hidden;
+}
+
+.card__like-button {
+  width: 21px;
+  height: 19px;
+  background-image: url("../images/like-button.png");
+  background-color: white;
+  border: none;
+  margin-top: 47px;
+  margin-left: 15px;
+}
+
+.card__like-button:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.card__like-button-active {
+background: url("../images/blackheart.png");
+
+}
+
+
+@media screen and (min-width: 700px) {
+
+.cards {
+  max-width: 880px;
+  gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+
+.card__image {
+  width: 282px;
+  height: 282px;
+
+}
+
+
+}
