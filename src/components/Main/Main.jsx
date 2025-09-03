@@ -5,13 +5,33 @@ import Popup from "./components/Popup/Popup";
 import EditProfile from "../Form/EditProfile/EditProfile";
 import EditAvatar from "../Form/EditAvatar/EditAvatar";
 import pencilIcon from "/images/avatar-pencil.png"
-import imageLandscapeDefault from "/images/Latemar_4.png"
 import AvatarImage from '/images/Avatar.png'
+import Card from "./components/Popup/Card/Card";
+import ImagePopup from "../Form/ImagePopup/ImagePopup";
 
-
+const cards = [
+    {
+    isLiked: false,
+    _id: '5d1f0611d321eb4bdcd707dd',
+    name: 'Yosemite Valley',
+    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg',
+    owner: '5d1f0611d321eb4bdcd707dd',
+    createdAt: '2019-07-05T08:10:57.741Z',
+},
+{
+    isLiked: false,
+    _id: '5d1f064ed321eb4bdcd707de',
+    name: 'Lake Louise',
+    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg',
+    owner: '5d1f0611d321eb4bdcd707dd',
+    createdAt: '2019-07-05T08:11:58.324Z',  
+    }
+]
+    console.log(cards);
 //RECORDAR CAMBIAR EL TEMPLATE POR UNA ESTRUCTURA DDINAMICA USANDO .MAP()
 function Main() {
     const [popup, setPopup] = useState(null);
+    //const [ setSelectedCard] = useState(null);
 
     function handleOpenPopup(popup) {
         setPopup(popup);
@@ -20,6 +40,11 @@ function Main() {
     function handleClosePopup() {
         setPopup(null);
     };  
+    //FUNCION PARA MANEJAR EL CLICK EN LA IMAGEN
+    /*function handleCardClick(card) {
+        setSelectedCard(card);
+        handleOpenPopup(imageComponent);
+    }*/
 
    //OBJETO POPUP NEW PLACE
     const newCardPopup = {
@@ -35,7 +60,8 @@ function Main() {
     const editAvatar = {
         title:'Cambiar foto de perfil',
         children: <EditAvatar />
-    }
+        } 
+    
     return(
     <main className="content">
     <section className="profile">
@@ -71,25 +97,15 @@ function Main() {
 </div>
     </section>
     <section className="cards">
-    <div className="cards__list">
-        <template id="card-template">
-        <div className="card">
-        <button 
-        type="button" 
-        className="card__trash-button"></button>
-        <img 
-        className="card__image" 
-        src={imageLandscapeDefault} 
-        alt="Valle de Yosemite landscape"/>
-        <div className="card__description">
-        <h2 className="card__title"></h2>
-        <button 
-        className="card__like-button" 
-        type="button"></button>
-        </div>
-        </div>
-    </template>
-    </div>
+    <ul className="cards__list">
+        {cards.map((card) => (
+            <Card 
+            key={card._id} 
+            card={card} 
+            handleOpenPopup={handleOpenPopup}
+            />
+        ))}
+    </ul>
     </section>
     {popup && (
         <Popup
