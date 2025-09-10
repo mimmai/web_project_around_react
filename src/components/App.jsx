@@ -1,16 +1,28 @@
 import Header from './Header/Header'
 import Main from './Main/Main'
 import Footer from './Footer/Footer'
-function App(){
+import { useEffect, useState } from 'react'
+import api from '../Utils/Api'
+import CurrentUserContext from '../Contexts/CurrentUserContext'
 
+
+function App(){
+  const [currentUser, setCurrentUser] = useState([]);
+
+  useEffect(() => {
+    api.getUserInfo()
+    .then(data => setCurrentUser(data))
+    .catch(error => console.error(error));
+    
+  }, []); 
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
     <Header />
     <Main />
     <Footer />
 </div>
-    </>
+    </CurrentUserContext.Provider>
   )
 }
 

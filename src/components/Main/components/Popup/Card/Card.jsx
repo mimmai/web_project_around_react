@@ -1,6 +1,6 @@
 import ImagePopup from "../../../../Form/ImagePopup/ImagePopup";
 
-export default function Card({ card, handleOpenPopup}) {
+export default function Card({ card, handleOpenPopup, onCardLike}) {
     const { name, link, isLiked } = card;
     //const { onCardClick } = props;
     //AGREGAR LUEGO onLikeCLICK al props 
@@ -12,7 +12,14 @@ export default function Card({ card, handleOpenPopup}) {
     handleOpenPopup(imageComponent)
     }
 
-    const likeButtonClass = isLiked ? 'card__like-button card__like-button_active' : 'card__like-button';
+    function handleLikeCLick() {
+        onCardLike(card);
+    }
+
+    const cardLikeButtonClassName = `card__like-button ${
+    isLiked ? 'card__like-button_is-active' : ''
+}`;
+
 
     return (
         < li className="card">
@@ -31,8 +38,8 @@ export default function Card({ card, handleOpenPopup}) {
                 <h2 className="card__title">{name}</h2>
                 <button 
                 aria-label='Like card'
-                className={likeButtonClass}
-                //onClick={() => onLikeClick(props.card)}
+                className={cardLikeButtonClassName}
+                onClick={handleLikeCLick}
                 type="button"></button>
                 </div>
                 </li>

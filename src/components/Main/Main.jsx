@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '../../../src/index.css'
 import NewCard from "../Form/NewCard/NewCard"; 
 import Popup from "./components/Popup/Popup";
@@ -8,8 +8,11 @@ import pencilIcon from "/images/avatar-pencil.png"
 import AvatarImage from '/images/Avatar.png'
 import Card from "./components/Popup/Card/Card";
 import ImagePopup from "../Form/ImagePopup/ImagePopup";
+import api from '../../Utils/Api'
+import { useContext } from "react";
+import CurrentUserContext from "../../Contexts/CurrentUserContext";
 
-const cards = [
+/*const cards = [
     {
     isLiked: false,
     _id: '5d1f0611d321eb4bdcd707dd',
@@ -27,9 +30,33 @@ const cards = [
     createdAt: '2019-07-05T08:11:58.324Z',  
     }
 ]
-    console.log(cards);
+    console.log(cards);*/
+
+
 //RECORDAR CAMBIAR EL TEMPLATE POR UNA ESTRUCTURA DDINAMICA USANDO .MAP()
 function Main() {
+    //OBTENER VALOR DE DEL CONTEXTO PARA ACCEDER A LA INFORMACION DEL USUARIO
+    const CurrentUser = useContext(CurrentUserContext);
+
+
+    //FUNCTION DE LA API
+    const [cards, setCards] = useState([]);
+
+    useEffect(() => {
+        api.getInitialCards()
+        .then(data => setCards(data))
+        .catch(error => console.error(error));
+    }, [])
+    async function handleCardLike(card) {
+    // Verifica una vez más si a esta tarjeta ya les has dado like
+    const isLiked = card.isLiked;
+    
+    // Envía una solicitud a la API y obtén los datos actualizados de la tarjeta
+    await api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+        setCards((state) => state.map((currentCard) => currentCard._id === card._id ? newCard : currentCard));
+    }).catch((error) => console.error(error));
+}
+    //VARIABLE DE ESTADO DEL POPUP
     const [popup, setPopup] = useState(null);
     //const [ setSelectedCard] = useState(null);
 
@@ -69,7 +96,7 @@ function Main() {
         <div className="profile__container">
     <img 
     className="avatar profile__avatar" 
-    src={AvatarImage} 
+    src={CurrentUser.avatar} 
     alt="imagen de perfil"/>
     <img 
     className="profile__image-pencil" 
@@ -80,7 +107,7 @@ function Main() {
         </div>
     <div className="profile__info">
         <div className="profile__title-container">
-        <div className="profile__title">Jacques Cousteau</div>
+        <div className="profile__title">{CurrentUser.name}</div>
         <button
         aria-label="Edit profile"
         className="profile__edit-button"
@@ -88,7 +115,7 @@ function Main() {
             onClick={() => handleOpenPopup(editProfile)}>
         </button>
         </div>
-    <p className="profile__Subtitle">Explorador</p>
+    <p className="profile__Subtitle">{CurrentUser.about} </p>
         </div>
     <button 
     className="profile__add-button"
@@ -103,6 +130,7 @@ function Main() {
             key={card._id} 
             card={card} 
             handleOpenPopup={handleOpenPopup}
+            onCardLike={handleCardLike}
             />
         ))}
     </ul>
