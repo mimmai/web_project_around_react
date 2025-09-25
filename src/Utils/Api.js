@@ -27,6 +27,7 @@
   }
 
   editUser(data) {
+    console.log('datos enviados:', data);
     return fetch(`${this.baseURL}/users/me`, {
       method: "PATCH",
       headers: this.headers,
@@ -88,6 +89,14 @@ dislikeCard(cardID) {
     });
 }
 
+changeLikeCardStatus(cardID, isLiked) {
+  if (isLiked) {
+    return this.dislikeCard(cardID)
+  } else { 
+  return this.likeCard(cardID)
+  }
+}
+//ESTO CAMBIA EL AVATAR DEL PERFIL
 profileImage(image) {
     return fetch(`${this.baseURL}/users/me/avatar`, {
     method: "PATCH",

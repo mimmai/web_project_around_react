@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import '../../../src/index.css'
 import NewCard from "../Form/NewCard/NewCard"; 
 import Popup from "./components/Popup/Popup";
@@ -8,9 +7,9 @@ import pencilIcon from "/images/avatar-pencil.png"
 import AvatarImage from '/images/Avatar.png'
 import Card from "./components/Popup/Card/Card";
 import ImagePopup from "../Form/ImagePopup/ImagePopup";
-import api from '../../Utils/Api'
 import { useContext } from "react";
 import CurrentUserContext from "../../Contexts/CurrentUserContext";
+import { useState } from 'react';
 
 /*const cards = [
     {
@@ -34,28 +33,11 @@ import CurrentUserContext from "../../Contexts/CurrentUserContext";
 
 
 //RECORDAR CAMBIAR EL TEMPLATE POR UNA ESTRUCTURA DDINAMICA USANDO .MAP()
-function Main() {
+function Main({ cards, onCardLike, onCardDelete, onAddPlaceSubmit, onClosePopup }) {
     //OBTENER VALOR DE DEL CONTEXTO PARA ACCEDER A LA INFORMACION DEL USUARIO
-    const CurrentUser = useContext(CurrentUserContext);
-
-
-    //FUNCTION DE LA API
-    const [cards, setCards] = useState([]);
-
-    useEffect(() => {
-        api.getInitialCards()
-        .then(data => setCards(data))
-        .catch(error => console.error(error));
-    }, [])
-    async function handleCardLike(card) {
-    // Verifica una vez más si a esta tarjeta ya les has dado like
-    const isLiked = card.isLiked;
+    const { currentUser } = useContext(CurrentUserContext);
     
-    // Envía una solicitud a la API y obtén los datos actualizados de la tarjeta
-    await api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-        setCards((state) => state.map((currentCard) => currentCard._id === card._id ? newCard : currentCard));
-    }).catch((error) => console.error(error));
-}
+
     //VARIABLE DE ESTADO DEL POPUP
     const [popup, setPopup] = useState(null);
     //const [ setSelectedCard] = useState(null);
@@ -76,7 +58,9 @@ function Main() {
    //OBJETO POPUP NEW PLACE
     const newCardPopup = {
         title: 'Nuevo lugar',
-        children: <NewCard />
+        children: <NewCard onAddPlaceSubmit={onAddPlaceSubmit}
+        onClose={onClosePopup}
+        />
     };
     //OBJETO DE EDITPROFILE
     const editProfile = {
@@ -88,7 +72,7 @@ function Main() {
         title:'Cambiar foto de perfil',
         children: <EditAvatar />
         } 
-    
+   
     return(
     <main className="content">
     <section className="profile">
@@ -96,7 +80,7 @@ function Main() {
         <div className="profile__container">
     <img 
     className="avatar profile__avatar" 
-    src={CurrentUser.avatar} 
+    src={currentUser.avatar} 
     alt="imagen de perfil"/>
     <img 
     className="profile__image-pencil" 
@@ -107,7 +91,7 @@ function Main() {
         </div>
     <div className="profile__info">
         <div className="profile__title-container">
-        <div className="profile__title">{CurrentUser.name}</div>
+        <div className="profile__title">{currentUser.name}</div>
         <button
         aria-label="Edit profile"
         className="profile__edit-button"
@@ -115,7 +99,7 @@ function Main() {
             onClick={() => handleOpenPopup(editProfile)}>
         </button>
         </div>
-    <p className="profile__Subtitle">{CurrentUser.about} </p>
+    <p className="profile__Subtitle">{currentUser.about} </p>
         </div>
     <button 
     className="profile__add-button"
@@ -130,7 +114,8 @@ function Main() {
             key={card._id} 
             card={card} 
             handleOpenPopup={handleOpenPopup}
-            onCardLike={handleCardLike}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
             />
         ))}
     </ul>
