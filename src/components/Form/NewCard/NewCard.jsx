@@ -48,8 +48,9 @@ onSubmit={handleSubmit}>
     id="input-image-error"></span>
     <button 
     type="submit"
-    className="form__button form__button_disabled" 
+    className="form__button" 
     id="form-place-button">enviar</button>
   </form>
  )
 }
+//form__button_disabled

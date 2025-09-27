@@ -1,5 +1,5 @@
 export default function ImagePopup({ card }) {
-   // const { name, link } = props.ImagePopup;
+
     return (
     <>    
     <img 

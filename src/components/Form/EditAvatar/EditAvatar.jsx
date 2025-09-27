@@ -30,13 +30,10 @@ export default function EditAvatar() {
     <span className="form__error" id="input-image-error"></span>
     <button 
     type="submit" 
-    className="form__button form__button-avatar form__button_disabled" 
+    className="form__button form__button-avatar" 
     id="form-avatar-button"
     >Guardar
     </button>
   </form>
     );
 };
-
-//LINEA DEL TITULO DEBERIA BORRARSE PERO NO TOI SEGURA 
-//<div className="form__title form__title-avatar">title</div>

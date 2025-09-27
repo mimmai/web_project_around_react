@@ -8,7 +8,9 @@ import CurrentUserContext from '../Contexts/CurrentUserContext'
 
 function App(){
   const [currentUser, setCurrentUser] = useState([]);
-  const [popup, setPopup] = useState(false)
+  const [popup, setPopup] = useState(null)
+
+
 
   useEffect(() => {
     (async () => {
@@ -40,8 +42,9 @@ function App(){
     })();
   }
 
-    const handleOpenPopup = () => setPopup(true);
-    const handleClosePopup = () => setPopup(false);
+    const handleOpenPopup = (popupData) => setPopup(popupData);
+    const handleClosePopup = () => setPopup(null);
+
 
     //FUNCTION DE LA API
     const [cards, setCards] = useState([]);
@@ -49,22 +52,17 @@ function App(){
     useEffect(() => {
         api.getInitialCards()
         .then(data => { 
-         // console.lo('Datos de la API:', data);
-        //  console.lo('primera tarjeta:', JSON.stringify(data[0], null, 2))
-        // console.lo('¿tienes likes la primera tarjeta', data[0].likes)
-         // console.lo('¿tiene _id la primera tarjeta', data[0]._id)
           setCards(data);
         })
         .catch(error => console.error(error))
     }, [])
     async function handleCardLike(card) {
-    // Verifica una vez más si a esta tarjeta ya les has dado like
-    //const isLiked = currentUser && card.likes ?
-    //card.likes.some(user => user._id === currentUser._id) : false
+     
     const isLiked = card.isLiked;
 
     // Envía una solicitud a la API y obtén los datos actualizados de la tarjeta
     await api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
+      console.log("newCard desde API:", newCard);
         setCards((state) => state.map((currentCard) => currentCard._id === card._id ? newCard : currentCard));
     }).catch((error) => console.error(error));
 }

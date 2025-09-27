@@ -9,12 +9,12 @@ export default function EditProfile() {
         //AGREGA VARIABLE DE ESTADO PARA NAME Y DESCRIPTION
         const [name, setName] = useState(currentUser.name)
         const [description, setDescription] = useState(currentUser.about);
-       
-         //VERIFICACION (borrar despues)
-         if (!currentUser || !currentUser.name){
-           return <div>Cargando...</div>;
+    
+        //VERIFICACION (borrar despues)
+        if (!currentUser || !currentUser.name){
+        return <div>Cargando...</div>;
         }
-       
+    
         //ACTUALIZA EL NOMBRE AL CAMBIO DE ENTRADA
         const hanldeNameChange = (event) => {
             setName(event.target.value);
@@ -37,7 +37,7 @@ return(
     noValidate
     onSubmit={handleSubmit}>
     <h2 className="form__title"
-    >Editar Perfil</h2>
+    >Editar perfil</h2>
     <input 
     className="form__input form__input-name form__input-type-error" 
     name="name"  
@@ -62,14 +62,16 @@ return(
     value={description}
     onChange={handleDescriptionChange}
     />
-    <span className="form__error" id="input-description-error"></span>
+    <span className="form__error" 
+    id="input-description-error"></span>
     <input 
     type="submit" 
-    className="form__button form__button_disabled" 
+    className="form__button" 
     id="input-submit"/>
     <span className="form__error" id="input-submit-error"></span>
     </form>
 );
 };
 
-//<h2 className="form__title">Editar Perfil</h2>
+
+//form__button_disabled
