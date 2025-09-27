@@ -2,8 +2,8 @@ import Header from './Header/Header'
 import Main from './Main/Main'
 import Footer from './Footer/Footer'
 import { useEffect, useState } from 'react'
-import api from '../Utils/Api'
-import CurrentUserContext from '../Contexts/CurrentUserContext'
+import api from '../utils/Api'
+import CurrentUserContext from '../contexts/CurrentUserContext'
 
 
 function App(){

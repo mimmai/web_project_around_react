@@ -8,7 +8,7 @@ import AvatarImage from '/images/Avatar.png'
 import Card from "./components/Popup/Card/Card";
 import ImagePopup from "../Form/ImagePopup/ImagePopup";
 import { useContext } from "react";
-import CurrentUserContext from "../../Contexts/CurrentUserContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 
 //RECORDAR CAMBIAR EL TEMPLATE POR UNA ESTRUCTURA DDINAMICA USANDO .MAP()

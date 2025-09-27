@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import ImagePopup from "../../../../Form/ImagePopup/ImagePopup";
-import CurrentUserContext from "../../../../../Contexts/CurrentUserContext";
+import CurrentUserContext from "../../../../../contexts/CurrentUserContext";
 
 export default function Card({ card, handleOpenPopup, onCardLike, onCardDelete}) {
     const { name, link } = card;
