@@ -114,7 +114,7 @@ profileImage(image) {
 }
 
  const api = new Api({
-    baseURL: "https://around-api.es.tripleten-services.com/v1/",
+    baseURL: "https://api.projectaroundtheworld.oops.wtf",
     headers: {
     authorization: "b7ca8585-8917-4aa6-8098-84ae835405ca",
     "Content-Type": "application/json"
@@ -122,3 +122,6 @@ profileImage(image) {
 });
 
 export default api;
+
+//"https://around-api.es.tripleten-services.com/v1/"
+//"b7ca8585-8917-4aa6-8098-84ae835405ca"
