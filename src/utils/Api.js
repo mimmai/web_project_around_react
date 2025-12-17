@@ -1,4 +1,110 @@
-    class Api {
+class Api {
+  constructor({ baseURL, headers }) {
+    this.baseURL = baseURL;
+    this.headers = headers;
+  }
+
+  _checkResponse(res) {
+    if (!res.ok) {
+      return Promise.reject(`Error: ${res.status}`);
+    }
+    return res.json();
+  }
+
+  getUserInfo() {
+    return fetch(`${this.baseURL}/users/me`, {
+      headers: this.headers,
+    })
+      .then(this._checkResponse)
+      .then((res) => res.data);
+  }
+
+  getInitialCards() {
+    return fetch(`${this.baseURL}/cards`, {
+      headers: this.headers,
+    })
+      .then(this._checkResponse)
+      .then((res) => res.data);
+  }
+
+  editUser(data) {
+    return fetch(`${this.baseURL}/users/me`, {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify(data),
+    })
+      .then(this._checkResponse)
+      .then((res) => res.data);
+  }
+
+  createCard(data) {
+    return fetch(`${this.baseURL}/cards`, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify(data),
+    })
+      .then(this._checkResponse)
+      .then((res) => res.data);
+  }
+
+  deleteCard(cardID) {
+    return fetch(`${this.baseURL}/cards/${cardID}`, {
+      method: 'DELETE',
+      headers: this.headers,
+    })
+      .then(this._checkResponse);
+  }
+
+  likeCard(cardID) {
+    return fetch(`${this.baseURL}/cards/${cardID}/likes`, {
+      method: 'PUT',
+      headers: this.headers,
+    })
+      .then(this._checkResponse)
+      .then((res) => res.data);
+  }
+
+  dislikeCard(cardID) {
+    return fetch(`${this.baseURL}/cards/${cardID}/likes`, {
+      method: 'DELETE',
+      headers: this.headers,
+    })
+      .then(this._checkResponse)
+      .then((res) => res.data);
+  }
+
+  changeLikeCardStatus(cardID, isLiked) {
+    return isLiked
+      ? this.dislikeCard(cardID)
+      : this.likeCard(cardID);
+  }
+
+  profileImage(image) {
+    return fetch(`${this.baseURL}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify(image),
+    })
+      .then(this._checkResponse)
+      .then((res) => res.data);
+  }
+}
+
+const api = new Api({
+  baseURL: 'https://api.projectaroundtheworld.oops.wtf',
+  headers: {
+    authorization: 'b7ca8585-8917-4aa6-8098-84ae835405ca',
+    'Content-Type': 'application/json',
+  },
+});
+
+export default api;
+
+//"https://around-api.es.tripleten-services.com/v1/"
+//"b7ca8585-8917-4aa6-8098-84ae835405ca"
+
+
+/* archivo original class Api {
   constructor({ baseURL, headers }){
     this.baseURL = baseURL;
     this.headers = headers;
@@ -124,4 +230,4 @@ profileImage(image) {
 export default api;
 
 //"https://around-api.es.tripleten-services.com/v1/"
-//"b7ca8585-8917-4aa6-8098-84ae835405ca"
+//"b7ca8585-8917-4aa6-8098-84ae835405ca" */
