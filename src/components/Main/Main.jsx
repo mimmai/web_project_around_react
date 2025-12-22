@@ -72,7 +72,7 @@ function Main({ cards, onCardLike, onCardDelete, onAddPlaceSubmit, onOpenPopup, 
     </section>
     <section className="cards">
     <ul className="cards__list">
-        {cards.map((card) => (
+        {cards?.map((card) => (
             <Card 
             key={card._id} 
             card={card} 

@@ -37,11 +37,14 @@ class Api {
       .then((res) => res.data);
   }
 
-  createCard(data) {
+  createCard( name, link ) {
     return fetch(`${this.baseURL}/cards`, {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify(data),
+      body: JSON.stringify({ 
+        name: name, 
+        link: link, 
+      }),
     })
       .then(this._checkResponse)
       .then((res) => res.data);
@@ -79,11 +82,13 @@ class Api {
       : this.likeCard(cardID);
   }
 
-  profileImage(image) {
+  profileImage(avatar) {
     return fetch(`${this.baseURL}/users/me/avatar`, {
       method: 'PATCH',
       headers: this.headers,
-      body: JSON.stringify(image),
+      body: JSON.stringify({ avatar: avatar, 
+
+      }),
     })
       .then(this._checkResponse)
       .then((res) => res.data);
